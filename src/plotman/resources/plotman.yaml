@@ -81,6 +81,28 @@ directories:
                 # the 4 machines, or 0, 1, 0, 1.
                 #   index: 0
 
+        # Archival local configuration.  Optional; if you do not wish to run the
+        # archiving operation, comment this section out.
+        #
+        # Currently archival depends on an rsync daemon running on the remote
+        # host.
+        # The archival also uses ssh to connect to the remote host and check
+        # for available directories. Set up ssh keys on the remote host to
+        # allow public key login from rsyncd_user.
+        # Complete example: https://github.com/ericaltendorf/plotman/wiki/Archiving
+        archive_local:
+                dst_path: dst_plots # copy result to dst path, eg: dst_plots/012
+                src_path: /plots # the result path, eg: /plots/012
+                # Optional index.  If omitted or set to 0, plotman will archive
+                # to the first archive dir with free space.  If specified,
+                # plotman will skip forward up to 'index' drives (if they exist).
+                # This can be useful to reduce io contention on a drive on the
+                # archive host if you have multiple plotters (simultaneous io
+                # can still happen at the time a drive fills up.)  E.g., if you
+                # have four plotters, you could set this to 0, 1, 2, and 3, on
+                # the 4 machines, or 0, 1, 0, 1.
+                #   index: 0
+
 
 # Plotting scheduling parameters
 scheduling:

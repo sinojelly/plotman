@@ -5,7 +5,7 @@ import math
 import os
 import subprocess
 
-from plotman import archive, configuration, manager, reporting
+from plotman import archive, archive_local, configuration, manager, reporting
 from plotman.job import Job
 
 
@@ -138,6 +138,13 @@ def curses_main(stdscr):
 
                 archdir_freebytes = archive.get_archdir_freebytes(cfg.directories.archive)
 
+            if archiving_local_configured:
+                if archiving_local_active:
+                    archiving_status, log_message = archive_local.spawn_archive_process(cfg.directories, jobs)
+                    if log_message:
+                        log.log(log_message)
+
+                archdir_freebytes = archive_local.get_archdir_freebytes(cfg.directories.archive_local)
 
         # Get terminal size.  Recommended method is stdscr.getmaxyx(), but this
         # does not seem to work on some systems.  It may be a bug in Python
